@@ -8,16 +8,11 @@ if 'addressed' not in st.session_state:
     st.session_state.addressed = None
 
 
-def get_base64_image(image_path):
-    try:
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode("utf-8")
-    except FileNotFoundError:
-        st.error(f"Error: The image file '{image_path}' was not found. Please make sure it's in the same directory.")
-        return None
+
+    
 
 
-st.header("MICHEAL PETERS' Portfolio and Resume")
+
 
 with st.sidebar:
     st.header("MICHEAL PETERS")
@@ -36,6 +31,8 @@ with st.sidebar:
     st.subheader("Settings")
     st.write("Pick a theme color:")
     selected_color = st.color_picker("", "#0000FF")
+    # Apply the selected color to a header
+    st.markdown(f"<h1 style='color:{selected_color};'>My Title</h1>", unsafe_allow_html=True)
     
     st.markdown("---")
     st.subheader("📫 Contact Me")
@@ -43,7 +40,7 @@ with st.sidebar:
 
 
 if select_option == "Resume":
-    
+    st.header("MICHEAL PETERS' Portfolio and Resume")
     if not st.session_state.name:
         temp_name = st.text_input('Hi there!, Can you please provide your name😊?')
         temp_addressed = st.selectbox('How are you addressed?', options=['Mr', 'Miss', 'Mrs', 'Master', 'Mistress', 'Sir', 'Ma'])
@@ -56,18 +53,35 @@ if select_option == "Resume":
 
     if st.session_state.name:
         st.write(f"Hi {st.session_state.addressed} {st.session_state.name}!, WELCOME!!! to my resume😍.")
-        st.markdown("---")
-    
+        
+        
+        def get_base64_image(image_path):
+            try:
+                with open(image_path, "rb") as img_file:
+                    return base64.b64encode(img_file.read()).decode("utf-8")
+            except FileNotFoundError:
+                st.error(f"Error: The image file '{image_path}' was not found. Please make sure it's in the same directory.")
+                return None
 
-    profile_image_path = 'My Profile Pics.jpg' 
-    profile_image_base64 = get_base64_image(profile_image_path)
-    
-    if profile_image_base64:
-        st.markdown(
-            f'<img src="data:image/png;base64,{profile_image_base64}" alt="Michael Peters Profile" style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; display: block; margin-left: auto; margin-right: auto;">',
-            unsafe_allow_html=True
-        )
+        
+        profile_image_base64 = get_base64_image("My Profile Pics.jpg")
+        st.markdown(f'<img src="data:image/png;base64,{profile_image_base64}" class="profile-img">', unsafe_allow_html=True)
+        
         st.markdown("---")
+    
+    
+    #profile_image_path = 'My Profile Pics.jpg' 
+    #profile_image_base64 = get_base64_image(profile_image_path)
+    
+    #if profile_image_base64:
+     #   st.markdown(
+      #   f'<img src="data:image/png;base64,{profile_image_base64}" alt="Michael Peters Profile" style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; display: block; margin-left: auto; margin-right: auto;">',
+       #  unsafe_allow_html=True
+        #)
+        #st.markdown("---") 
+    #profile_image_path = 'My Profile Pics.jpg' 
+    #profile_image_base64 = get_base64_image(profile_image_path)
+    
     
     st.title("My Resume")
     st.markdown("### MICHEAL PETERS")
